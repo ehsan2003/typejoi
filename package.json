@@ -1,0 +1,10 @@
+{
+  "name": "typejoi",
+  "version": "1.0.0",
+  "description": "joi for typescript",
+  "main": "index.js",
+  "repository": "https://github.com/ehsan2003/typejoi.git",
+  "author": "ehsan2003.2003.382@gmail.com",
+  "license": "MIT",
+  "private": false
+}
