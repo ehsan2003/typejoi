@@ -5,6 +5,8 @@ import { getMeta } from "./MetaKeys";
  * @param targetClass target class
  * @returns
  */
-export function isTypeJoi(targetClass: Function) {
+export function isTypeJoi(
+    targetClass: any
+): targetClass is { new (...args: any[]): any } {
     return !!getMeta("isTypeJoi", targetClass);
 }
