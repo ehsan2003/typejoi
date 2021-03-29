@@ -7,7 +7,7 @@ import { isTypeJoi } from "./isTypeJoi";
  * @param target target class ( the target class must decorated with @TypeJoi(...) )
  * @returns
  */
-export function getSchemaFromClass<T extends { new(...args: any[]): {}; }>(
+export function getSchemaFromClass<T extends { new (...args: any[]): {} }>(
     target: T
 ): Joi.Schema {
     if (!isTypeJoi(target)) {
@@ -18,7 +18,7 @@ export function getSchemaFromClass<T extends { new(...args: any[]): {}; }>(
         return JoiModifier as joi.Schema;
     }
 
-    const keysMap = getMeta("joiKeys", target);
+    const keysMap = getMeta("joiKeys", target) || [];
     const schema = Joi.object(
         Object.fromEntries(keysMap.map(({ key, schema }) => [key, schema]))
     );
