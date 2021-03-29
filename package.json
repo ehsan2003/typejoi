@@ -2,7 +2,8 @@
   "name": "typejoi",
   "version": "1.0.0",
   "description": "joi for typescript",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "prepublish": "tsc",
   "repository": "https://github.com/ehsan2003/typejoi.git",
   "author": "ehsan2003.2003.382@gmail.com",
   "license": "MIT",
@@ -12,7 +13,11 @@
     "joi": "^17.4.0",
     "reflect-metadata": "^0.1.13"
   },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "jest"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.3"
   }
 }
