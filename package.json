@@ -7,7 +7,7 @@
     "class-validator",
     "decorator"
   ],
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "joi for typescript",
   "main": "dist/index.js",
   "prepublish": "tsc",
