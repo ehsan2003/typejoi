@@ -11,5 +11,8 @@
     "@types/joi": "^17.2.3",
     "joi": "^17.4.0",
     "reflect-metadata": "^0.1.13"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
