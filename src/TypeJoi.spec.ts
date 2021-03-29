@@ -4,7 +4,7 @@ import { MetaKeys } from "./MetaKeys";
 import Joi from "joi";
 describe("TypeJoi decorator", () => {
     it("should attach metadata", () => {
-        const modifierObject = (schema) => schema;
+        const modifierObject = (schema: Joi.ObjectSchema) => schema;
         class Test {}
         TypeJoi(modifierObject)(Test);
         expect(Reflect.getMetadata(MetaKeys.isTypeJoi, Test)).toBeTruthy();
