@@ -39,11 +39,7 @@ export function getSchemaFromClass<T extends { new (...args: any[]): {} }>(
 
     // setting cache
     if (setCache) {
-        // console.log("setting cache to", schema);
-
         Reflect.defineMetadata(MetaKeys.cacheSchema, schema, target);
-        // console.log(Reflect.getMetadata(MetaKeys.cacheSchema, target))
-        console.log(target, Reflect.getMetadataKeys(target));
     }
     return schema;
 }

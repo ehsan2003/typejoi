@@ -40,4 +40,11 @@ describe("getSchemaFromClass function", () => {
         const outputSchema = getSchemaFromClass(TestClass);
         expect(outputSchema.describe()).toEqual(schema.describe());
     });
+    it("should return cached value if useCache is true", () => {
+        class TestClass {}
+        const testValue = { test: "test" };
+        Reflect.defineMetadata(MetaKeys.isTypeJoi, true, TestClass);
+        Reflect.defineMetadata(MetaKeys.cacheSchema, testValue, TestClass);
+        expect(getSchemaFromClass(TestClass)).toBe(testValue);
+    });
 });
