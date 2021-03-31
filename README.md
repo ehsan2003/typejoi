@@ -168,7 +168,7 @@ const invalid2 = {
 ## nestjs
 
 ```typescript
-// typejoi.guard.ts
+// typejoi.pipe.ts
 
 import {
     ArgumentMetadata,
