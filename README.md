@@ -242,3 +242,27 @@ export class AppController {
     }
 }
 ```
+
+# Api
+
+# getSchemaFromClass
+
+returns a schema from a class decorated with @TypeJoi(...) with or without caching
+arguments: - target : the class - useCache?: boolean - if true it will use cache if exists ( default true ) - setCache?: boolean - if true it will set cache when generating schema ( default true)
+
+# TypeJoi
+
+the class decorator to indicate this is a schema class
+arguments: - modifierOrSchema?: schema modifier or an alternative schema - schema modifier: a function which accepts a joi schema and return another one useful for adding options to schema or modify keys for some reasons - alternative schema : if input is a joi schema all props are ignored and schema will return when getSchemaFromClass used
+
+# isTypeJoi
+
+verifies a class is a typejoi class or not
+arguments : - target:class
+
+# tj
+
+attach validator to a property of a class decorated with @TypeJoi if no value passed it tries to get validator from the type ( it should be a class with TypeJoi decorator) other wise it will throw error
+arguments:
+
+-   schema?: joiSchema

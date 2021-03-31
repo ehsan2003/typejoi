@@ -1,5 +1,5 @@
 import Joi, * as joi from "joi";
-import { getMeta, SchemaModifier } from "./MetaKeys";
+import { getMeta, MetaKeys, SchemaModifier } from "./MetaKeys";
 import { isTypeJoi } from "./isTypeJoi";
 
 /**
@@ -8,22 +8,42 @@ import { isTypeJoi } from "./isTypeJoi";
  * @returns
  */
 export function getSchemaFromClass<T extends { new (...args: any[]): {} }>(
-    target: T
+    target: T,
+    useCache = true,
+    setCache = true
 ): Joi.Schema {
     if (!isTypeJoi(target)) {
         throw new Error("the class must be decorated with @TypeJoi(...)");
     }
+
+    if (useCache) {
+        const cache = getMeta("cacheSchema", target);
+        if (cache) {
+            return cache;
+        }
+    }
+
     const JoiModifier = getMeta("JoiModifier", target);
     if (joi.isSchema(JoiModifier)) {
         return JoiModifier as joi.Schema;
     }
 
     const keysMap = getMeta("joiKeys", target) || [];
-    const schema = Joi.object(
+    // generating schema
+    let schema = Joi.object().keys(
         Object.fromEntries(keysMap.map(({ key, schema }) => [key, schema]))
     );
     if (JoiModifier) {
-        return (JoiModifier as SchemaModifier)(schema);
+        schema = (JoiModifier as SchemaModifier)(schema);
+    }
+
+    // setting cache
+    if (setCache) {
+        // console.log("setting cache to", schema);
+
+        Reflect.defineMetadata(MetaKeys.cacheSchema, schema, target);
+        // console.log(Reflect.getMetadata(MetaKeys.cacheSchema, target))
+        console.log(target, Reflect.getMetadataKeys(target));
     }
     return schema;
 }

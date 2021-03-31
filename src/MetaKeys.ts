@@ -1,6 +1,7 @@
 import Joi from "joi";
 
 export const MetaKeys = {
+    cacheSchema:'TypeJoiDecorate:cacheSchema',
     isTypeJoi: "TypeJoiDecorate:isTypeJoi",
     joiKeys: "TypeJoiDecorate:joiKeys",
     JoiModifier: "TypeJoiDecorate:JoiModifier",
@@ -9,6 +10,7 @@ export const MetaKeys = {
 export type SchemaModifier = (schema: Joi.ObjectSchema) => Joi.ObjectSchema;
 export type ModifierOrSchema = SchemaModifier | Joi.Schema;
 type MetaTypes = {
+    cacheSchema: Joi.AnySchema;
     isTypeJoi: boolean;
     joiKeys: { key: string; schema: Joi.Schema }[];
     JoiModifier: ModifierOrSchema;
