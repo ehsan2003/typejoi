@@ -224,12 +224,12 @@ class Test {
     prop: string;
 }
 
-@UsePipes(TypejoiPipe) // you are able to pass pipe to module level and application level.
+@UsePipes(TypejoiPipe) // you can also pass pipe to module level and application level.
 @Controller()
 export class AppController {
     constructor(private readonly appService: AppService) {}
 
-    // pipe will not effect this
+    // pipe will not affect this
     @Post("/test")
     getText(@Body("boolean", ParseBoolPipe) boolean: boolean) {
         return boolean;
