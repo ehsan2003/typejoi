@@ -116,16 +116,12 @@ class Teacher extends Job {
     level: "very-hard";
 }
 
-const createAlternatives = (...alternatives: Function) => {
-    return alternatives.map((alternative) => getSchemaFromClass(alternative));
-};
-
 @TypeJoi()
 class Person {
     @tj(joi.string())
     name: string;
 
-    @tj(createAlternatives(Teacher, Worker))
+    @tj([Teacher, Worker]))
     job: Teacher | Worker; // it is not possible to get type from an union instead you can pass it like this
 }
 
@@ -260,7 +256,9 @@ arguments:
 the class decorator to indicate this is a schema class
 arguments:
 
--   modifierOrSchema?: schema modifier or an alternative schema - schema modifier: a function which accepts a joi schema and return another one useful for adding options to schema or modify keys for some reasons - alternative schema : if input is a joi schema all props are ignored and schema will return when getSchemaFromClass used
+-   modifierOrSchema?: schema modifier or an alternative schema
+    -   schema modifier: a function which accepts a joi schema and return another one useful for adding options to schema or modify keys for some reasons
+    -   alternative schema : if input is a joi schema all props are ignored and schema will return when getSchemaFromClass used
 
 # isTypeJoi
 
@@ -274,4 +272,4 @@ arguments :
 attach validator to a property of a class decorated with @TypeJoi if no value passed it tries to get validator from the type ( it should be a class with TypeJoi decorator) other wise it will throw error
 arguments:
 
--   schema?: joiSchema
+-   schema?: joiSchema | Class[] - accepts schema or array of TypeJoi classes and generates schema from those classes with Joi.alternatives
