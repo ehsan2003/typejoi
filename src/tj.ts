@@ -8,12 +8,32 @@ import { getSchemaFromClass } from "./getSchemaFromClass";
  * @param JoiSchema input schema for a field if not specified the schema will extract from type ( in this case the type should also be class decorated with @TypeJoi(...))
  * @returns PropertyDecorator
  */
-export function tj(JoiSchema?: joi.Schema): PropertyDecorator {
+export function tj(JoiSchema?: joi.Schema | Function[]): PropertyDecorator {
+    if (Array.isArray(JoiSchema)) {
+        if (!JoiSchema.length) {
+            throw new Error(
+                "when passing function JoiSchema must have at least one item"
+            );
+        }
+
+        JoiSchema = Joi.alternatives().try(
+            ...JoiSchema.map((typeJoiClass, index) => {
+                if (!isTypeJoi(typeJoiClass)) {
+                    throw new Error(
+                        `class in index ${index} is not decorated with @TypeJoi (${typeJoiClass.toString()})`
+                    );
+                }
+                return getSchemaFromClass(typeJoiClass);
+            })
+        );
+    }
     if (JoiSchema && !Joi.isSchema(JoiSchema)) {
         throw new Error("invalid input schema");
     }
 
     return (target: any, key: string | symbol) => {
+        console.log("called", key, target);
+
         const type = Reflect.getMetadata("design:type", target, key);
 
         let schema: Joi.Schema | undefined;
@@ -22,7 +42,7 @@ export function tj(JoiSchema?: joi.Schema): PropertyDecorator {
             schema = getSchemaFromClass(type);
         }
 
-        schema = JoiSchema || schema;
+        schema = (JoiSchema as Joi.Schema) || schema;
 
         if (!schema) {
             throw new Error(

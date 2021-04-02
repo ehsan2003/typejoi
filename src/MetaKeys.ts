@@ -1,7 +1,7 @@
 import Joi from "joi";
 
 export const MetaKeys = {
-    cacheSchema:'TypeJoiDecorate:cacheSchema',
+    cacheSchema: "TypeJoiDecorate:cacheSchema",
     isTypeJoi: "TypeJoiDecorate:isTypeJoi",
     joiKeys: "TypeJoiDecorate:joiKeys",
     JoiModifier: "TypeJoiDecorate:JoiModifier",
