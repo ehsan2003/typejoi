@@ -32,8 +32,6 @@ export function tj(JoiSchema?: joi.Schema | Function[]): PropertyDecorator {
     }
 
     return (target: any, key: string | symbol) => {
-        console.log("called", key, target);
-
         const type = Reflect.getMetadata("design:type", target, key);
 
         let schema: Joi.Schema | undefined;
